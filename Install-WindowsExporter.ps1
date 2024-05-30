@@ -116,6 +116,7 @@ $cmdline = @()
 $cmdline += "/i"
 $cmdline += "$installer"
 $cmdline += "ENABLED_COLLECTORS=""$collectors"""
+$cmdline += "--%"
 $cmdline += "EXTRA_FLAGS=""$flags"""
 $cmdline = $cmdline -join ' '
 
