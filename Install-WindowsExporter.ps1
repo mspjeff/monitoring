@@ -100,17 +100,12 @@ function Get-Installer
 }
 
 $installer = Get-Installer
-Write-Output "[*] Downloaded installer to $installer"
-
 $collectors = Get-CollectorList
-Write-Output "[*] Collectors to enable are $collectors"
-
 
 $flags = @()
 $flags += "--collector.scheduled_task.exclude=""""/Microsoft/.+"""""
 $flags += "--collector.service.services-where=""""StartMode='auto'"""""
 $flags = $flags -join ' '
-Write-Output "[*] Extra flags are $flags"
 
 $cmdline = @()
 $cmdline += "/i"
@@ -120,7 +115,7 @@ $cmdline += "--%"
 $cmdline += "EXTRA_FLAGS=""$flags"""
 $cmdline = $cmdline -join ' '
 
-Write-Output "[+] Installing service using $cmdline"
+Write-Output "[+] Executing msiexec.exe $cmdline"
 Start-Process -FilePath "msiexec.exe" -ArgumentList $cmdline -Wait
 
 #
@@ -131,6 +126,7 @@ if (-not ((Invoke-RestMethod http://localhost:9182/health).status -eq 'ok'))
 {
     Write-Warning "Windows Exporter does not appear to be providing health info"
     return
+} else
+{
+    Write-Output "[*] Listening at http://localhost:9182/metrics"
 }
-
-Write-Output "[*] Listening at http://localhost:9182/metrics"
