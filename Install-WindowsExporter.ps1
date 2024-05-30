@@ -57,7 +57,7 @@ function Get-CollectorList
         vmms = 'hyperv'
         w3svc = 'iis'
         mssqlserver = 'mssql'
-        termservice = 'terminal_services'
+        #termservice = 'terminal_services'
     }
 
     foreach ($key in $serviceToCollectorHash.Keys)
